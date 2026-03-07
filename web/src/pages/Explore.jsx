@@ -1,15 +1,27 @@
 import 'leaflet/dist/leaflet.css';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Helmet } from 'react-helmet';
-import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, ZoomControl, useMap } from 'react-leaflet';
 import L, { Icon } from 'leaflet';
 import Navbar from '../components/Navbar.jsx';
 import MapDrawer from '../components/MapDrawer.jsx';
 import { locations } from '../data/locations.js';
 
-// Modern Custom Marker with Pulsing Effect (via CSS)
+// --- Helper Component to handle "Fly To" animation ---
+const MapController = ({ target }) => {
+  const map = useMap();
+  if (target) {
+    // Zoom in close (level 16) to see surroundings clearly
+    map.flyTo(target.coordinates, 16, {
+      duration: 2,
+      easeLinearity: 0.25
+    });
+  }
+  return null;
+};
+
 const customIcon = new Icon({
-  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // Sleeker pin
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
   iconSize: [35, 35],
   iconAnchor: [17, 35],
   popupAnchor: [0, -35],
@@ -18,6 +30,7 @@ const customIcon = new Icon({
 const Explore = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [mapMode, setMapMode] = useState('satellite'); // Toggle state
 
   const myanmarCenter = [21.9162, 95.9560];
 
@@ -32,10 +45,10 @@ const Explore = () => {
         <title>Explore Myanmar | Interactive Discovery</title>
       </Helmet>
 
-      <div className="flex flex-col w-full h-screen overflow-hidden bg-slate-50">
-        {/* Floating Glassmorphism Navbar */}
+      <div className="flex flex-col w-full h-screen overflow-hidden bg-slate-900">
+        {/* Floating Navbar */}
         <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[2000] w-[95%] max-w-7xl">
-          <div className="bg-white/80 backdrop-blur-md shadow-lg border border-white/20 rounded-2xl">
+          <div className="bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20 rounded-2xl">
             <Navbar />
           </div>
         </div>
@@ -45,18 +58,33 @@ const Explore = () => {
           <MapContainer
             center={myanmarCenter}
             zoom={6}
-            zoomControl={false} // Disabled default to reposition
+            zoomControl={false}
             scrollWheelZoom={true}
             className="w-full h-full"
-            style={{ background: "#f8fafc" }}
           >
-            {/* Using a more minimal, "Voyager" style tile layer */}
-            <TileLayer
-              attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-            />
+            {/* --- Satellite View (Best for seeing surroundings) --- */}
+            {mapMode === 'satellite' ? (
+              <TileLayer
+                attribution='&copy; Esri'
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+              />
+            ) : (
+              <TileLayer
+                attribution='&copy; CARTO'
+                url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+              />
+            )}
+
+            {/* Labels for Satellite view so you can still see city names */}
+            {mapMode === 'satellite' && (
+              <TileLayer
+                url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png"
+                opacity={0.7}
+              />
+            )}
 
             <ZoomControl position="bottomright" />
+            <MapController target={selectedLocation} />
 
             {locations.map((location) => (
               <Marker
@@ -65,46 +93,44 @@ const Explore = () => {
                 icon={customIcon}
                 eventHandlers={{
                   click: () => handleMarkerClick(location),
-                  mouseover: (e) => e.target.openPopup(), // Hover for quick info
-                  mouseout: (e) => e.target.closePopup(),
                 }}
               />
             ))}
           </MapContainer>
 
-          {/* Floating Search/Filter Overlay (Optional Design Addition) */}
-          <div className="absolute top-24 left-6 z-[1000] hidden md:block">
-            <div className="bg-white/90 backdrop-blur-md p-4 rounded-xl shadow-xl border border-slate-200 w-64">
-              <h2 className="text-sm font-semibold text-slate-900 mb-2">Discovery Filter</h2>
-              <div className="space-y-2">
-                <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                  <div className="bg-emerald-500 h-full w-1/3"></div>
-                </div>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Showing {locations.length} Destinations</p>
-              </div>
+          {/* --- MAP MODE TOGGLE --- */}
+          <div className="absolute top-24 right-6 z-[1000] flex flex-col gap-2">
+            <button 
+              onClick={() => setMapMode('satellite')}
+              className={`p-3 rounded-xl shadow-xl border transition-all ${mapMode === 'satellite' ? 'bg-emerald-500 border-emerald-400 text-white' : 'bg-white text-slate-600'}`}
+            >
+              <span className="text-[10px] font-black uppercase tracking-tighter">Satellite</span>
+            </button>
+            <button 
+              onClick={() => setMapMode('street')}
+              className={`p-3 rounded-xl shadow-xl border transition-all ${mapMode === 'street' ? 'bg-emerald-500 border-emerald-400 text-white' : 'bg-white text-slate-600'}`}
+            >
+              <span className="text-[10px] font-black uppercase tracking-tighter">Street</span>
+            </button>
+          </div>
+
+          {/* Summary Box */}
+          <div className="absolute bottom-10 left-6 z-[1000]">
+            <div className="bg-slate-900/80 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-white/10 w-64 text-white">
+              <h2 className="text-xs font-bold text-emerald-400 uppercase mb-1">Target Surroundings</h2>
+              <p className="text-slate-300 text-sm">
+                {selectedLocation ? `Exploring ${selectedLocation.name}` : "Select a marker to see the landscape"}
+              </p>
             </div>
           </div>
         </main>
 
-        {/* Drawer Component */}
         <MapDrawer
           isOpen={isDrawerOpen}
           onClose={() => setIsDrawerOpen(false)}
           location={selectedLocation}
         />
       </div>
-
-      {/* Global CSS for Leaflet customization */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        .leaflet-container { font-family: 'Inter', sans-serif; }
-        .leaflet-bar { border: none !important; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-        .leaflet-bar a { border-bottom: 1px solid #f1f5f9 !important; color: #64748b !important; }
-        .leaflet-popup-content-wrapper { 
-          border-radius: 12px; 
-          padding: 4px; 
-          box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1); 
-        }
-      `}} />
     </>
   );
 };
