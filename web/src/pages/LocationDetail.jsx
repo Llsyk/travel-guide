@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MapPin, Play, Pause, ArrowLeft, Volume2, Square, Compass } from 'lucide-react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { ArrowLeft, Compass, Info, Image as ImageIcon, Map as MapIcon, Maximize2, Navigation } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, ZoomControl, LayersControl } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+
+// Components
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 import GalleryModal from '../components/GalleryModal.jsx';
@@ -13,12 +15,11 @@ import VirtualTourPanel from '../components/VirtualTourPanel.jsx';
 import TourControlBar from '../components/TourControlBar.jsx';
 import TourMarkerHighlight from '../components/TourMarkerHighlight.jsx';
 import { locations } from '../data/locations.js';
-import { useToast } from '../hooks/use-toast';
 import { useTourController } from '../hooks/useTourController.js';
+
 const LocationDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { toast } = useToast();
   const mapRef = useRef(null);
   
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
@@ -27,162 +28,169 @@ const LocationDetail = () => {
   const location = locations.find((loc) => loc.id === id);
   const tourState = useTourController(location);
 
-  useEffect(() => {
-    if (tourState.isTourActive && mapRef.current && location?.tourStops?.length) {
-      const currentStop = location.tourStops[tourState.currentStopIndex];
-      mapRef.current.flyTo(currentStop.coordinates, 16, {
-        duration: 1,
-        easeLinearity: 0.25
-      });
-    } else if (!tourState.isTourActive && mapRef.current && location) {
-      mapRef.current.flyTo(location.coordinates, 13, { duration: 1 });
-    }
-  }, [tourState.isTourActive, tourState.currentStopIndex, location]);
+  if (!location) return null;
 
-  if (!location) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Location not found</h1>
-          <button onClick={() => navigate('/')} className="text-accent hover:underline">
-            Return to Home
-          </button>
-        </div>
-      </div>
-    );
-  }
-
+  // Modern Red Pin Icon
   const customIcon = new Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/2776/2776067.png',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
   });
-
-  const handleImageClick = (index) => {
-    setSelectedImageIndex(index);
-    setIsGalleryOpen(true);
-  };
 
   return (
     <>
       <Helmet>
-        <title>{`${location.name} - Myanmar Explorer`}</title>
-        <meta name="description" content={`${location.description} Explore 360° views, historical insights, and stunning gallery of ${location.name}.`} />
+        <title>{`${location.name} | Myanmar Explorer`}</title>
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 relative">
+      <div className="min-h-screen bg-[#FDFDFD] text-slate-900">
         <Navbar />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center space-x-2 text-gray-600 hover:text-accent transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Back</span>
-          </button>
-        </div>
-
-        {/* Hero Section */}
-        <section className="relative h-[500px] mt-4">
-          <div className="absolute inset-0">
-            <img src={location.thumbnail} alt={location.name} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        {/* --- Hero Section: Cinematic & Clear --- */}
+        <section className="relative h-[70vh] w-full overflow-hidden">
+          <motion.img 
+            initial={{ scale: 1.1 }} 
+            animate={{ scale: 1 }} 
+            transition={{ duration: 1.5 }}
+            src={location.thumbnail} 
+            className="w-full h-full object-cover" 
+            alt={location.name}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          
+          <div className="absolute top-10 left-10 z-20">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center gap-2 text-white/80 hover:text-white transition-all group bg-black/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/20"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span className="text-xs font-bold uppercase tracking-widest">Back</span>
+            </button>
           </div>
 
-          <div className="relative z-10 h-full flex items-end">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full flex flex-col md:flex-row md:items-end justify-between gap-6">
-              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                <div className="flex items-center space-x-2 text-primary mb-4">
-                  <MapPin className="w-5 h-5" />
-                  <span className="font-medium">Myanmar</span>
-                </div>
-                <h1 className="text-5xl font-bold text-white mb-4">{location.name}</h1>
-                <p className="text-xl text-gray-200 italic">{location.tagline}</p>
-              </motion.div>
-
-              {location.tourStops && location.tourStops.length > 0 && !tourState.isTourActive && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={tourState.startTour}
-                  className="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-accent/30 flex items-center space-x-3 transition-all"
-                >
-                  <Compass className="w-6 h-6" />
-                  <span>Start Virtual Tour</span>
-                </motion.button>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* Map Section (Moved up for tour visibility) */}
-        <section className="bg-white py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl overflow-hidden shadow-xl h-[60vh] relative">
-              <MapContainer
-                center={location.coordinates}
-                zoom={13}
-                style={{ height: '100%', width: '100%' }}
-                zoomControl={true}
-                ref={mapRef}
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                
-                {!tourState.isTourActive && (
-                  <Marker position={location.coordinates} icon={customIcon} />
-                )}
-
-                {tourState.isTourActive && location.tourStops?.map((stop, index) => (
-                  <TourMarkerHighlight 
-                    key={stop.id} 
-                    stop={stop} 
-                    index={index} 
-                    isActive={index === tourState.currentStopIndex} 
-                  />
-                ))}
-              </MapContainer>
-            </div>
-          </div>
-        </section>
-
-        {/* History Section */}
-        <section className="bg-white py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">Historical Insights</h2>
-              <div className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-3xl shadow-lg border border-gray-100">
-                <p className="text-gray-700 leading-relaxed text-lg">{location.history}</p>
-              </div>
+          <div className="absolute bottom-16 left-0 w-full px-8 md:px-20">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+              <span className="text-amber-400 font-black uppercase tracking-[0.3em] text-xs mb-2 block">Featured Destination</span>
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 drop-shadow-lg">{location.name}</h1>
+              <p className="text-white/90 text-xl font-light italic max-w-2xl">{location.tagline}</p>
             </motion.div>
           </div>
         </section>
 
-        {/* Image Gallery Section */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Image Gallery</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {location.gallery.map((image, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  className="aspect-square rounded-2xl overflow-hidden shadow-lg cursor-pointer"
-                  onClick={() => handleImageClick(index)}
-                >
-                  <img src={image} alt={`${location.name} gallery image ${index + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-                </motion.div>
-              ))}
+        {/* --- Main Content Split --- */}
+        <main className="max-w-7xl mx-auto px-6 py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            
+            {/* Left: Info and History */}
+            <div className="lg:col-span-7 space-y-12">
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-8 w-1 bg-amber-500 rounded-full" />
+                  <h2 className="text-2xl font-bold tracking-tight">The Story of {location.name}</h2>
+                </div>
+                <p className="text-slate-600 text-lg leading-relaxed font-light mb-6">
+                  {location.history}
+                </p>
+                <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 italic text-slate-500 leading-relaxed">
+                  "{location.description}"
+                </div>
+              </section>
+
+              {/* Gallery Grid */}
+              <section>
+                <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
+                  <ImageIcon className="w-5 h-5 text-amber-500" /> Captured Moments
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {location.gallery.map((img, i) => (
+                    <motion.div 
+                      key={i}
+                      whileHover={{ scale: 1.02 }}
+                      className="aspect-square rounded-2xl overflow-hidden cursor-pointer shadow-sm border border-slate-100"
+                      onClick={() => { setSelectedImageIndex(i); setIsGalleryOpen(true); }}
+                    >
+                      <img src={img} className="w-full h-full object-cover" alt="Gallery" />
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
             </div>
-          </motion.div>
-        </section>
+
+            {/* Right: Natural Realistic Map */}
+            <div className="lg:col-span-5">
+              <div className="sticky top-28 space-y-6">
+                <div className="bg-white rounded-[2.5rem] p-4 shadow-2xl shadow-slate-200 border border-slate-100 overflow-hidden">
+                  <div className="flex items-center justify-between mb-4 px-4 pt-2">
+                    <h3 className="font-bold text-slate-800 flex items-center gap-2">
+                      <Navigation className="w-4 h-4 text-blue-500" /> Geographic View
+                    </h3>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Natural Satellite</span>
+                  </div>
+                  
+                  {/* --- THE NATURAL MAP --- */}
+                  <div className="h-[450px] w-full rounded-[2rem] overflow-hidden relative">
+                    <MapContainer
+                      center={location.coordinates}
+                      zoom={16} // Closer zoom to see pagodas clearly
+                      zoomControl={false}
+                      className="h-full w-full z-0"
+                      ref={mapRef}
+                    >
+                      {/* Using World Imagery for a natural, clear look at the landscape */}
+                      <TileLayer 
+                        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                        attribution='&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EBP, and the GIS User Community'
+                      />
+                      {/* Adding a transparent label layer so you can see road names over the satellite */}
+                      <TileLayer 
+                        url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png"
+                      />
+                      
+                      <ZoomControl position="bottomright" />
+                      {!tourState.isTourActive && (
+                        <Marker position={location.coordinates} icon={customIcon} />
+                      )}
+                      
+                      {tourState.isTourActive && location.tourStops?.map((stop, index) => (
+                        <TourMarkerHighlight 
+                          key={stop.id} 
+                          stop={stop} 
+                          index={index} 
+                          isActive={index === tourState.currentStopIndex} 
+                        />
+                      ))}
+                    </MapContainer>
+
+                    {/* Quick Start Button Overlay */}
+                    {!tourState.isTourActive && (
+                      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000] w-[85%]">
+                   
+<button
+  onClick={() => navigate(`/explore/${location.id}`)} // Redirects to full screen exploration
+  className="w-full bg-amber-500 text-slate-900 py-4 rounded-2xl font-black shadow-xl flex items-center justify-center gap-3 hover:bg-amber-400 transition-all uppercase text-xs tracking-widest"
+>
+  <Compass className="w-4 h-4" /> Start Exploration
+</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Info Card */}
+                <div className="bg-amber-50 p-8 rounded-[2rem] border border-amber-100">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Info className="w-5 h-5 text-amber-600" />
+                    <h4 className="font-bold text-amber-900">Visiting Guide</h4>
+                  </div>
+                  <p className="text-amber-800/70 text-sm leading-relaxed">
+                    The {location.name} is best viewed during the early morning hours to avoid the heat and see the golden architecture in natural sunlight.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </main>
 
         <Footer />
 
@@ -193,9 +201,14 @@ const LocationDetail = () => {
           initialIndex={selectedImageIndex}
         />
 
-        {/* Virtual Tour Overlays */}
-        <VirtualTourPanel tourState={tourState} />
-        <TourControlBar tourState={tourState} />
+        <AnimatePresence>
+          {tourState.isTourActive && (
+            <>
+              <VirtualTourPanel tourState={tourState} />
+              <TourControlBar tourState={tourState} />
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </>
   );
