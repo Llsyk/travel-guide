@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Compass, Globe, Clock, Play, Pause, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Compass, Globe, Clock, Play, Pause, ChevronRight, Languages } from 'lucide-react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -20,6 +20,7 @@ const LocationDetail = () => {
   const location = locations.find((loc) => loc.id === id);
 
   // --- State Management ---
+  const [lang, setLang] = useState('en'); // 'en' or 'my'
   const [isReading, setIsReading] = useState(false);
   const [currentWordIndex, setCurrentWordIndex] = useState(-1);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
@@ -31,8 +32,14 @@ const LocationDetail = () => {
 
   if (!location) return null;
 
-  // Split history into words for highlighting
-  const words = location.history.split(/\s+/);
+  // --- Multi-language Text Selection ---
+  const historyText = lang === 'my' ? (location.historyMy || location.history) : location.history;
+  const nameText = lang === 'my' ? (location.nameMy || location.name) : location.name;
+  const taglineText = lang === 'my' ? (location.taglineMy || location.tagline) : location.tagline;
+  const descriptionText = lang === 'my' ? (location.descriptionMy || location.description) : location.description;
+
+  // Split logic: English uses spaces, Myanmar uses grammatical markers (။, ၊) or manual spaces
+  const words = historyText.split(lang === 'my' ? /(?<=။|၊|\s)/ : /\s+/);
 
   // --- Parallax Effects ---
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
@@ -44,18 +51,26 @@ const LocationDetail = () => {
 
   // --- Speech Initialization & Cleanup ---
   useEffect(() => {
-    const msg = new SpeechSynthesisUtterance(location.history);
+    synth.cancel(); // Stop any previous audio when language changes
+    const msg = new SpeechSynthesisUtterance(historyText);
     
     const setVoice = () => {
       const voices = synth.getVoices();
-      // Priority: Female sounding voices
+      
+      // Priority for Myanmar Voice if language is 'my'
+      const myanmarVoice = voices.find(v => v.lang.startsWith('my') || v.name.includes('Myanmar') || v.name.includes('Burmese'));
       const femaleVoice = voices.find(v => 
         v.name.includes('Female') || 
         v.name.includes('Google UK English Female') || 
         v.name.includes('Samantha') ||
         v.name.includes('Microsoft Zira')
       );
-      if (femaleVoice) msg.voice = femaleVoice;
+
+      if (lang === 'my' && myanmarVoice) {
+        msg.voice = myanmarVoice;
+      } else if (femaleVoice) {
+        msg.voice = femaleVoice;
+      }
     };
 
     setVoice();
@@ -67,8 +82,9 @@ const LocationDetail = () => {
 
     msg.onboundary = (event) => {
       if (event.name === 'word') {
-        const textUpToBoundary = location.history.substring(0, event.charIndex);
-        const wordCount = textUpToBoundary.trim().split(/\s+/).length;
+        const textUpToBoundary = historyText.substring(0, event.charIndex);
+        const splitPattern = lang === 'my' ? /(?<=။|၊|\s)/ : /\s+/;
+        const wordCount = textUpToBoundary.trim().split(splitPattern).length;
         setCurrentWordIndex(wordCount);
       }
     };
@@ -81,9 +97,9 @@ const LocationDetail = () => {
     utteranceRef.current = msg;
 
     return () => {
-      synth.cancel(); // Stop talking if user leaves page
+      synth.cancel();
     };
-  }, [location.history, synth]);
+  }, [historyText, lang, synth]);
 
   const toggleSpeech = () => {
     if (isReading) {
@@ -93,7 +109,7 @@ const LocationDetail = () => {
       if (synth.paused) {
         synth.resume();
       } else {
-        synth.cancel(); // Reset any existing processes
+        synth.cancel();
         synth.speak(utteranceRef.current);
       }
       setIsReading(true);
@@ -103,11 +119,26 @@ const LocationDetail = () => {
   return (
     <>
       <Helmet>
-        <title>{`${location.name} | Myanmar Explorer`}</title>
+        <title>{`${nameText} | Myanmar Explorer`}</title>
       </Helmet>
 
-      <div className="min-h-screen bg-[#F8F9FA] text-slate-900">
+      <div className={`min-h-screen bg-[#F8F9FA] text-slate-900 ${lang === 'my' ? 'font-pyidaungsu' : ''}`}>
         <Navbar />
+
+        {/* --- LANGUAGE TOGGLE --- */}
+        <div className="fixed top-24 right-8 z-[1001] flex flex-col gap-3">
+          {['en', 'my'].map((l) => (
+            <button
+              key={l}
+              onClick={() => { setLang(l); synth.cancel(); setIsReading(false); }}
+              className={`w-12 h-12 rounded-full font-black text-xs shadow-2xl transition-all flex items-center justify-center border-2 ${
+                lang === l ? 'bg-amber-500 border-white text-white' : 'bg-white border-amber-500 text-amber-500 hover:bg-amber-50'
+              }`}
+            >
+              {l.toUpperCase()}
+            </button>
+          ))}
+        </div>
 
         {/* --- 1. HERO SECTION --- */}
         <section className="relative h-screen w-full flex items-end justify-start overflow-hidden bg-black">
@@ -122,18 +153,20 @@ const LocationDetail = () => {
               className="flex items-center gap-2 text-white mb-12 hover:gap-4 transition-all group"
             >
               <ArrowLeft className="w-5 h-5 text-amber-500" />
-              <span className="text-sm font-bold uppercase tracking-widest">Return to Discovery</span>
+              <span className="text-sm font-bold uppercase tracking-widest">
+                {lang === 'en' ? 'Return to Discovery' : 'ရှာဖွေမှုသို့ ပြန်သွားရန်'}
+              </span>
             </motion.button>
 
             <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
               <span className="bg-amber-500 text-black px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-6 inline-block">
-                Exclusive Heritage Site
+                {lang === 'en' ? 'Exclusive Heritage Site' : 'ထူးခြားသော အမွေအနှစ်နေရာ'}
               </span>
               <h1 className="text-7xl md:text-9xl font-serif font-bold text-slate-900 leading-none mb-6">
-                {location.name}
+                {nameText}
               </h1>
               <p className="text-xl md:text-2xl text-slate-700 font-light italic max-w-2xl border-l-4 border-amber-500 pl-8 mt-10">
-                {location.tagline}
+                {taglineText}
               </p>
             </motion.div>
           </div>
@@ -142,11 +175,12 @@ const LocationDetail = () => {
         {/* --- 2. CONTENT SECTION --- */}
         <section className="relative z-20 max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-16 py-32">
           
-          {/* Narrative Column */}
           <div className="lg:col-span-7">
             <div className="flex items-center justify-between mb-12">
               <div className="flex items-center gap-4 flex-grow">
-                <span className="text-amber-600 font-bold uppercase tracking-widest text-xs">Chronicles</span>
+                <span className="text-amber-600 font-bold uppercase tracking-widest text-xs">
+                  {lang === 'en' ? 'Chronicles' : 'သမိုင်းကြောင်း'}
+                </span>
                 <div className="h-[1px] flex-grow bg-slate-200" />
               </div>
               
@@ -155,15 +189,21 @@ const LocationDetail = () => {
                 className="ml-6 flex items-center gap-2 bg-amber-500 text-white px-6 py-3 rounded-full hover:bg-amber-600 transition-all font-bold text-xs shadow-lg active:scale-95"
               >
                 {isReading ? <Pause className="w-4 h-4 text-white" /> : <Play className="w-4 h-4 text-white" />}
-                {isReading ? "PAUSE NARRATION" : synth.paused ? "RESUME STORY" : "LISTEN TO HISTORY"}
+                {lang === 'en' ? 
+                  (isReading ? "PAUSE NARRATION" : synth.paused ? "RESUME STORY" : "LISTEN TO HISTORY") :
+                  (isReading ? "ရပ်တန့်မည်" : synth.paused ? "ပြန်လည်နားထောင်မည်" : "နားထောင်မည်")
+                }
               </button>
             </div>
             
             <h2 className="text-4xl font-serif mb-10 text-slate-800 leading-tight">
-              An Architectural Testament to the <span className="italic text-amber-700">Golden Era.</span>
+              {lang === 'en' ? 
+                <>An Architectural Testament to the <span className="italic text-amber-700">Golden Era.</span></> :
+                <>ရွှေရောင်လွှမ်းသော <span className="italic text-amber-700">ခေတ်ဦး၏</span> ဗိသုကာလက်ရာများ။</>
+              }
             </h2>
             
-            <div className="prose prose-lg text-slate-600 font-light leading-relaxed mb-16">
+            <div className={`prose prose-lg text-slate-600 font-light leading-relaxed mb-16 ${lang === 'my' ? 'text-2xl leading-[1.8]' : ''}`}>
               <div className="flex flex-wrap">
                 {words.map((word, idx) => (
                   <motion.span
@@ -182,24 +222,19 @@ const LocationDetail = () => {
             </div>
           </div>
 
-          {/* Interactive Travel Kit Column */}
           <div className="lg:col-span-5">
             <div className="sticky top-32 space-y-8">
               
-              {/* Virtual Tour / Map Card */}
               <div className="bg-white p-6 rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden group">
                 <div className="flex items-center gap-3 mb-6 px-2">
                   <Globe className="w-5 h-5 text-blue-500" />
-                  <h3 className="font-bold text-slate-800 uppercase tracking-tighter">Location Insight</h3>
+                  <h3 className="font-bold text-slate-800 uppercase tracking-tighter">
+                    {lang === 'en' ? 'Location Insight' : 'တည်နေရာ အချက်အလက်'}
+                  </h3>
                 </div>
 
                 <div className="h-72 w-full rounded-[2rem] overflow-hidden relative shadow-inner">
-                  <MapContainer
-                    center={location.coordinates}
-                    zoom={15}
-                    zoomControl={false}
-                    className="h-full w-full"
-                  >
+                  <MapContainer center={location.coordinates} zoom={15} zoomControl={false} className="h-full w-full">
                     <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
                     <Marker position={location.coordinates} icon={customIcon} />
                   </MapContainer>
@@ -210,26 +245,30 @@ const LocationDetail = () => {
                       onClick={() => navigate(`/explore/${location.id}`)}
                       className="w-full bg-white/95 backdrop-blur-md text-slate-900 py-4 rounded-2xl font-black shadow-xl flex items-center justify-center gap-2 hover:bg-amber-500 hover:text-white transition-all text-[10px] tracking-[0.2em]"
                     >
-                      START VIRTUAL TOUR <ChevronRight className="w-4 h-4" />
+                      {lang === 'en' ? 'START VIRTUAL TOUR' : 'အွန်လိုင်းခရီးစဉ် စတင်မည်'} <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Quick Insight Card */}
               <div className="bg-slate-900 text-white p-10 rounded-[3rem] shadow-2xl relative overflow-hidden">
                  <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-6">
                     <Clock className="w-5 h-5 text-amber-400" />
-                    <h4 className="font-bold uppercase tracking-widest text-xs text-amber-400">Visiting Insight</h4>
+                    <h4 className="font-bold uppercase tracking-widest text-xs text-amber-400">
+                      {lang === 'en' ? 'Visiting Insight' : 'လည်ပတ်ရန် အကြံပြုချက်'}
+                    </h4>
                   </div>
                   <p className="text-slate-400 text-lg font-light leading-relaxed mb-8">
-                    {location.description}
+                    {descriptionText}
                   </p>
                   <div className="pt-8 border-t border-white/10 flex justify-between items-center">
-                    <span className="text-xs text-slate-500 uppercase tracking-widest">Entry status</span>
+                    <span className="text-xs text-slate-500 uppercase tracking-widest">
+                      {lang === 'en' ? 'Entry status' : 'ဝင်ရောက်ခွင့်'}
+                    </span>
                     <span className="text-emerald-400 font-bold flex items-center gap-2 text-xs">
-                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" /> OPEN TO PUBLIC
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" /> 
+                      {lang === 'en' ? 'OPEN TO PUBLIC' : 'အများပြည်သူဝင်ရောက်နိုင်သည်'}
                     </span>
                   </div>
                 </div>
@@ -243,8 +282,12 @@ const LocationDetail = () => {
         {/* --- 3. GALLERY SECTION --- */}
         <section className="bg-white py-32 px-6">
           <div className="max-w-7xl mx-auto text-center mb-20">
-            <h2 className="text-5xl font-serif mb-4 text-slate-900">The Visual Treasury</h2>
-            <p className="text-slate-500 uppercase tracking-[0.4em] text-[10px] font-black">Scroll to witness the architecture</p>
+            <h2 className="text-5xl font-serif mb-4 text-slate-900">
+              {lang === 'en' ? 'The Visual Treasury' : 'ဓာတ်ပုံမှတ်တမ်းများ'}
+            </h2>
+            <p className="text-slate-500 uppercase tracking-[0.4em] text-[10px] font-black">
+              {lang === 'en' ? 'Scroll to witness the architecture' : 'ဗိသုကာလက်ရာများကို ကြည့်ရှုရန် အောက်သို့ဆွဲပါ'}
+            </p>
           </div>
           
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -277,4 +320,4 @@ const LocationDetail = () => {
   );
 };
 
-export default LocationDetail;;
+export default LocationDetail;

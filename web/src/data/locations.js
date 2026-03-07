@@ -14,46 +14,51 @@ export const locations = [
       'https://images.unsplash.com/photo-1582719366852-e0c8c4b6e8e2'
     ],
     "tourStops": [
-    {
-      "id": "stop-1",
-      "name": "The Great Chinthe Guardians",
-      "description": "Two massive white mythical lions guarding the southern entrance path.",
-      "coordinates": [21.1901, 94.8938],
-      
-      "narration": "Welcome to Shwezigon. You are standing before the Chinthe, the mythical lions that guard the entrance. Legend says the site for this pagoda was chosen by a white elephant carrying a Buddha relic; wherever it knelt, the pagoda was built."
-    },
-    {
-      "id": "stop-2",
-      "name": "The 37 Nat Shrine",
-      "description": "A small hall housing the spirits of the 37 Nats, representing pre-Buddhist Burmese animism.",
-      "coordinates": [21.1905, 94.8942],
-      
-      "narration": "In this small shed to the southeast, you'll find the 37 Nats. King Anawrahta famously allowed these traditional spirits to be worshipped here to help the local people transition to Theravada Buddhism, placing them at the feet of the Buddha."
-    },
-    {
-      "id": "stop-3",
-      "name": "The King's Reflection Pool",
-      "description": "A tiny, water-filled hole in the stone pavement used to view the pagoda's reflection.",
-      "coordinates": [21.1903, 94.8940],
-      "narration": "Look for a small indentation in the stone floor filled with water. Ancient kings used this tiny pool to see the reflection of the Hti (the golden umbrella) at the very top of the stupa without straining their necks looking upward."
-    },
-    {
-      "id": "stop-4",
-      "name": "The Four Standing Buddhas",
-      "description": "Four 13-foot bronze Buddhas located in pavilions at the cardinal points.",
-      "coordinates": [21.1902, 94.8939],
-     
-      "narration": "At each of the four cardinal directions, you will find a massive bronze Buddha. These are the only four original bronze statues remaining from the Bagan era. Notice the 'Abhaya Mudra'—the gesture of fearlessness."
-    },
-    {
-      "id": "stop-5",
-      "name": "Kyanzittha’s Mon Inscriptions",
-      "description": "Square stone pillars featuring ancient Mon language inscriptions.",
-      "coordinates": [21.1904, 94.8941],
-      
-      "narration": "These stone pillars contain inscriptions by King Kyanzittha. They are invaluable to historians, detailing the religious and social life of the 11th century and the King’s efforts to finish this golden masterpiece."
-    }
-  ]
+{
+  "id": "stop-1",
+  "name": "The Great Chinthe Guardians",
+  "description": "Two massive white mythical lions guarding the southern entrance path.",
+  "coordinates": [21.1901, 94.8938],
+  "narration": "Welcome to Shwezigon. You are standing before the Chinthe, the mythical lions that guard the entrance.",
+  "history": "The Chinthe are legendary lion-like creatures that serve as guardians of Buddhist temples and pagodas across Myanmar. At the entrance to Shwezigon Pagoda, two large Chinthe statues stand watch over the sacred grounds. According to Burmese tradition, these mythical lions protect the temple from evil spirits and negative energies. The presence of Chinthe statues at pagoda entrances dates back many centuries and reflects the blend of local mythology and Buddhist symbolism in Burmese culture. At Shwezigon, these guardians mark the transition from the ordinary world into a sacred spiritual space, welcoming pilgrims while symbolically protecting the relics and holy objects preserved inside the pagoda."
+},
+
+{
+  "id": "stop-2",
+  "name": "The 37 Nat Shrine",
+  "description": "A small hall housing the spirits of the 37 Nats.",
+  "coordinates": [21.1905, 94.8942],
+  "narration": "In this small shrine you will find the famous 37 Nats.",
+  "history": "The Nat shrine located near Shwezigon Pagoda represents an important part of Myanmar’s spiritual heritage. Nats are powerful spirits that were worshipped in Myanmar long before the arrival of Theravada Buddhism. When King Anawrahta introduced Buddhism to the Pagan Kingdom in the 11th century, many people still believed strongly in these traditional spirits. Instead of banning the worship of Nats, the king allowed them to coexist with Buddhism. He officially recognized 37 major Nats and placed their shrine within the pagoda complex. This decision helped local people gradually transition to Buddhist practices while still respecting their traditional beliefs. Today, the Nat shrine symbolizes the unique blending of animism and Buddhism in Myanmar culture."
+},
+
+{
+  "id": "stop-3",
+  "name": "The King's Reflection Pool",
+  "description": "A small water-filled hole used to view the pagoda’s reflection.",
+  "coordinates": [21.1903, 94.8940],
+  "narration": "This tiny pool allowed ancient kings to see the reflection of the pagoda’s golden umbrella.",
+  "history": "The small reflection pool found within the Shwezigon Pagoda complex has an interesting historical purpose. In ancient times, Burmese kings and high-ranking monks often visited the pagoda to pay respect to the sacred relics enshrined within the stupa. Instead of looking directly upward at the tall structure, which could be uncomfortable for long periods, they used the small pool of water on the stone pavement to see the reflection of the pagoda’s golden Hti, or umbrella-shaped crown, at the very top. The Hti symbolizes spiritual protection and the highest point of the sacred structure. This simple yet clever design demonstrates the thoughtful architectural details that can be found throughout the Shwezigon complex."
+},
+
+{
+  "id": "stop-4",
+  "name": "The Four Standing Buddhas",
+  "description": "Four bronze Buddha statues located at the cardinal directions.",
+  "coordinates": [21.1902, 94.8939],
+  "narration": "At each direction you will find a standing Buddha statue.",
+  "history": "At the four cardinal directions surrounding the Shwezigon Pagoda stand four impressive bronze Buddha statues. Each statue faces a different direction—north, south, east, and west—symbolizing the universal reach of the Buddha’s teachings. These statues date back to the Bagan period and are among the few original bronze sculptures that have survived from that era. The Buddhas are shown performing the Abhaya Mudra, a hand gesture representing protection, reassurance, and the removal of fear. This gesture reflects the compassionate nature of the Buddha and offers spiritual comfort to pilgrims visiting the site. The statues are placed inside small pavilions so visitors can approach them closely to pray, meditate, and reflect."
+},
+
+{
+  "id": "stop-5",
+  "name": "Kyanzittha’s Mon Inscriptions",
+  "description": "Stone pillars containing ancient inscriptions.",
+  "coordinates": [21.1904, 94.8941],
+  "narration": "These pillars contain inscriptions written during the reign of King Kyanzittha.",
+  "history": "The stone inscription pillars located near the Shwezigon Pagoda are among the most valuable historical records from the Bagan era. These inscriptions were commissioned by King Kyanzittha, who completed the construction of the pagoda after the death of King Anawrahta. Written primarily in the Mon language, the inscriptions describe the religious devotion of the king and document the social and political life of the Pagan Kingdom during the 11th century. They also provide details about the construction of the pagoda, the relics enshrined within it, and the king’s efforts to promote Theravada Buddhism throughout the region. For historians and archaeologists, these inscriptions are extremely important because they help scholars better understand the history, culture, and religious development of early Myanmar."
+}
+]
   },
   /*{
     id: 'shwedagon-pagoda',
