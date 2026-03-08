@@ -21,9 +21,11 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.4",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.15.0",
+    "framer-motion": "^11.18.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.469.0",
     "react": "^18.3.1",
@@ -33,7 +35,8 @@
     "react-router-dom": "^7.13.0",
     "swiper": "^12.1.2",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.160.1"
   },
   "devDependencies": {
     "@babel/generator": "^7.26.3",

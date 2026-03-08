@@ -8,6 +8,9 @@ import LocationDetail from './pages/LocationDetail.jsx';
 import ExplorationMode from './pages/ExplorationMode.jsx';
 import ExplorationModeOverview from './pages/ExplorationModeOverview.jsx';
 import TempleLauncher from './pages/TempleLauncher.jsx';
+import Login from './pages/Login.jsx'; 
+import AdminDashboard from './pages/AdminDashboard.jsx';
+
 function App() {
   return (
     <Router>
@@ -20,6 +23,8 @@ function App() {
         <Route path="/explore/:id" element={<ExplorationMode />} />
         <Route path="/launcher" element={<TempleLauncher />} />
         <Route path="/tour/:id" element={<ExplorationModeOverview />} />
+        <Route path="/admin" element={<Login />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
       <Toaster />
     </Router>

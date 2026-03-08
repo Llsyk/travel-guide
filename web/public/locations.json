@@ -1,0 +1,316 @@
+[
+  {
+    "id": "bagan-shweshigon",
+    "name": "Bagan Shweshigon Pagoda",
+    "description": "Ancient golden pagoda built in the 11th century, one of the most sacred Buddhist sites in Myanmar.",
+    "tagline": "Where History Meets Spirituality",
+    "coordinates": [
+      21.1717,
+      94.8585
+    ],
+    "history": "The Shwezigon Pagoda is one of the most important and sacred Buddhist stupas in Myanmar. It is located in Nyaung-U near the ancient city of Bagan. Construction began during the reign of King Anawrahta in the 11th century and was completed by King Kyansittha around 1102. The pagoda contains sacred relics of the Buddha and became a prototype for later Burmese stupas.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "The Great Chinthe Guardians",
+        "description": "Two massive white mythical lions guarding the southern entrance path.",
+        "coordinates": [
+          21.1901,
+          94.8938
+        ],
+        "narration": "Welcome to Shwezigon. You are standing before the Chinthe, the mythical lions that guard the entrance.",
+        "history": "The Chinthe are legendary lion-like creatures that guard Buddhist temples and pagodas across Myanmar."
+      },
+      {
+        "id": "stop-2",
+        "name": "The 37 Nat Shrine",
+        "description": "A small hall housing the spirits of the 37 Nats.",
+        "coordinates": [
+          21.1905,
+          94.8942
+        ],
+        "narration": "In this shrine you will find the famous 37 Nats.",
+        "history": "The Nat shrine reflects the blending of animism and Buddhism in Myanmar culture."
+      },
+      {
+        "id": "stop-3",
+        "name": "The King's Reflection Pool",
+        "description": "A small water-filled hole used to view the pagoda reflection.",
+        "coordinates": [
+          21.1903,
+          94.894
+        ],
+        "narration": "This tiny pool allowed ancient kings to see the reflection of the pagoda\u2019s golden umbrella.",
+        "history": "The pool was used to view the reflection of the pagoda's sacred Hti."
+      },
+      {
+        "id": "stop-4",
+        "name": "The Four Standing Buddhas",
+        "description": "Four bronze Buddha statues located at the cardinal directions.",
+        "coordinates": [
+          21.1902,
+          94.8939
+        ],
+        "narration": "At each direction you will find a standing Buddha statue.",
+        "history": "The statues represent the universal reach of Buddha's teachings."
+      },
+      {
+        "id": "stop-5",
+        "name": "Kyanzittha\u2019s Mon Inscriptions",
+        "description": "Stone pillars containing ancient inscriptions.",
+        "coordinates": [
+          21.1904,
+          94.8941
+        ],
+        "narration": "These pillars contain inscriptions written during King Kyanzittha's reign.",
+        "history": "These inscriptions provide important historical information about the Pagan Kingdom."
+      }
+    ],
+    "thumbnail": "/uploads/bagan-shweshigon_orig.jpg",
+    "depthMap": "/depth_maps/bagan-shweshigon_depth.png"
+  },
+  {
+    "id": "ananda-temple",
+    "name": "Ananda Temple",
+    "description": "Known as the Westminster Abbey of Burma.",
+    "tagline": "The Eternal Masterpiece of Bagan",
+    "coordinates": [
+      21.1708,
+      94.8677
+    ],
+    "thumbnail": "/uploads/ananda-temple_orig.jpg",
+    "depthMap": "/depth_maps/ananda-temple_depth.png",
+    "history": "Built around 1105 AD by King Kyanzittha, Ananda Temple is one of the best preserved temples in Bagan.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "The Four Standing Buddhas",
+        "description": "Four massive teak statues representing the Buddhas.",
+        "coordinates": [
+          21.1708,
+          94.8677
+        ],
+        "narration": "Look up at the towering gilded statues.",
+        "history": "These statues symbolize the universal presence of Buddha."
+      }
+    ]
+  },
+  {
+    "id": "shwesandaw-pagoda",
+    "name": "Shwesandaw Pagoda",
+    "description": "A pagoda famous for sunset views in Bagan.",
+    "tagline": "The Sunset Terrace",
+    "coordinates": [
+      21.1637,
+      94.8643
+    ],
+    "thumbnail": "/uploads/shwesandaw-pagoda_orig.jpg",
+    "depthMap": "/depth_maps/shwesandaw-pagoda_depth.png",
+    "history": "Built in 1057 by King Anawrahta to enshrine sacred Buddha hairs.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "The Five Terraces",
+        "description": "Terraces representing levels of Buddhist cosmology.",
+        "coordinates": [
+          21.1637,
+          94.8643
+        ],
+        "narration": "The terraces symbolize Buddhist cosmology.",
+        "history": "The terraces once allowed pilgrims to climb and pray."
+      }
+    ]
+  },
+  {
+    "id": "dhammayangyi-temple",
+    "name": "Dhammayangyi Temple",
+    "description": "The largest temple in Bagan.",
+    "tagline": "The Massive Fortress of Faith",
+    "coordinates": [
+      21.162,
+      94.8729
+    ],
+    "thumbnail": "/uploads/dhammayangyi-temple_orig.jpg",
+    "depthMap": "/depth_maps/dhammayangyi-temple_depth.png",
+    "history": "Built by King Narathu in the 12th century and famous for its precise brickwork.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "Interior Corridors",
+        "description": "Massive brick hallways.",
+        "coordinates": [
+          21.162,
+          94.8729
+        ],
+        "narration": "Observe the precision of the brickwork.",
+        "history": "The brick masonry here is considered the finest in Bagan."
+      }
+    ]
+  },
+  {
+    "id": "sulamani-temple",
+    "name": "Sulamani Temple",
+    "description": "A multi-story temple famous for murals.",
+    "tagline": "The Crowning Jewel",
+    "coordinates": [
+      21.1649,
+      94.8814
+    ],
+    "thumbnail": "/uploads/sulamani-temple_orig.jpg",
+    "depthMap": "/depth_maps/sulamani-temple_depth.png",
+    "history": "Built in 1183 by King Narapatisithu.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "Fresco Walkway",
+        "description": "Walls covered in paintings.",
+        "coordinates": [
+          21.1649,
+          94.8814
+        ],
+        "narration": "Observe the murals carefully.",
+        "history": "These murals illustrate Buddhist teachings."
+      }
+    ]
+  },
+  {
+    "id": "thatbyinnyu-temple",
+    "name": "Thatbyinnyu Temple",
+    "description": "The tallest temple in Bagan.",
+    "tagline": "The Temple of Omniscience",
+    "coordinates": [
+      21.1688,
+      94.8631
+    ],
+    "thumbnail": "/uploads/thatbyinnyu-temple_orig.jpg",
+    "depthMap": "/depth_maps/thatbyinnyu-temple_depth.png",
+    "history": "Built by King Alaungsithu in 1144.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "Upper Terrace View",
+        "description": "Viewpoint overlooking nearby temples.",
+        "coordinates": [
+          21.1688,
+          94.8631
+        ],
+        "narration": "From here you can see the plains of Bagan.",
+        "history": "The height symbolizes the omniscience of Buddha."
+      }
+    ]
+  },
+  {
+    "id": "dhammayazika-pagoda",
+    "name": "Dhammayazika Pagoda",
+    "description": "A pentagonal pagoda.",
+    "tagline": "The Gilded Pentagram",
+    "coordinates": [
+      21.1472,
+      94.8856
+    ],
+    "thumbnail": "/uploads/dhammayazika-pagoda_orig.jpg",
+    "depthMap": "/depth_maps/dhammayazika-pagoda_depth.png",
+    "history": "Built in 1196 by King Narapatisithu.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "Pentagonal Base",
+        "description": "Five small temples around the pagoda.",
+        "coordinates": [
+          21.1472,
+          94.8856
+        ],
+        "narration": "This pagoda honors five Buddhas.",
+        "history": "It uniquely includes a shrine for the future Buddha."
+      }
+    ]
+  },
+  {
+    "id": "tayoke-pyay-temple",
+    "name": "Tayoke Pyay Temple",
+    "description": "A large two-story temple located in the Minnanthu village area.",
+    "tagline": "The Flight of the Invaders",
+    "coordinates": [
+      21.161,
+      94.8847
+    ],
+    "thumbnail": "/uploads/tayoke-pyay-temple_orig.jpg",
+    "depthMap": "/depth_maps/tayoke-pyay-temple_depth.png",
+    "history": "Built by King Narathihapate, known as the king who fled from the Chinese (Tayoke Pyay).",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "Stucco Reliefs",
+        "description": "Detailed exterior carvings that have survived centuries of weather.",
+        "coordinates": [
+          21.161,
+          94.8847
+        ],
+        "narration": "Look closely at the window pediments to see the intricate mythical creatures carved into the plaster.",
+        "history": "The stucco decorations show the craftsmanship of late Bagan architecture."
+      }
+    ]
+  },
+  {
+    "id": "pyatthatgyi-temple",
+    "name": "Pyatthatgyi Temple",
+    "description": "One of the last great monasteries built in Bagan, known for its massive vaulted hall.",
+    "tagline": "The Hall of Sunset",
+    "coordinates": [
+      21.1578,
+      94.8825
+    ],
+    "thumbnail": "/uploads/pyatthatgyi-temple_orig.jpg",
+    "depthMap": "/depth_maps/pyatthatgyi-temple_depth.png",
+    "history": "An example of the Double-cave style temple, built in the 13th century during the reign of King Kyaswa.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "Open Terrace",
+        "description": "A wide, flat roof area used for viewing the plains.",
+        "coordinates": [
+          21.1578,
+          94.8825
+        ],
+        "narration": "This is one of the best places to feel the scale of the monk libraries and corridors.",
+        "history": "The terrace allowed monks and visitors to view the surrounding temples and plains."
+      }
+    ]
+  },
+  {
+    "id": "thanbula-temple",
+    "name": "Thanbula Temple",
+    "description": "A bright, airy temple named after the Queen who commissioned it.",
+    "tagline": "The Queen\u2019s Prayer",
+    "coordinates": [
+      21.1595,
+      94.8858
+    ],
+    "thumbnail": "/uploads/thanbula-temple_orig.jpg",
+    "depthMap": "/depth_maps/thanbula-temple_depth.png",
+    "history": "Built in 1255 by Queen Thanbula. It is famous for its interior lighting and mural paintings.",
+    "gallery": [],
+    "tourStops": [
+      {
+        "id": "stop-1",
+        "name": "Queen\u2019s Murals",
+        "description": "Delicate paintings depicting the 28 Buddhas.",
+        "coordinates": [
+          21.1595,
+          94.8858
+        ],
+        "narration": "Unlike the dark halls of Dhammayangyi, this temple was designed to let in natural light to illuminate the art.",
+        "history": "These murals represent the devotional artwork commissioned by Queen Thanbula."
+      }
+    ]
+  }
+]
