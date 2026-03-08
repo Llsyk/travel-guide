@@ -278,52 +278,7 @@ const LocationDetail = () => {
             </div>
           </div>
         </section>
-{/* --- 360 VIRTUAL TOUR SECTION --- */}
-        <section className="bg-[#1a1a1a] py-32 px-6 overflow-hidden">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row items-end justify-between mb-12 gap-6">
-              <div className="text-left">
-                <div className="flex items-center gap-3 mb-4">
-                  <Compass className="w-6 h-6 text-amber-500 animate-spin-slow" />
-                  <span className="text-amber-500 font-black uppercase tracking-[0.3em] text-xs">
-                    {langData[lang].tour360Badge}
-                  </span>
-                </div>
-                <h2 className="text-5xl font-serif text-white">
-                  {langData[lang].tour360Title}
-                </h2>
-              </div>
-              <div className="text-slate-400 text-sm italic">
-                Courtesy of <a href="https://www.airpano.com/" target="_blank" rel="noreferrer" className="text-amber-500 hover:underline">AirPano.ru</a>
-              </div>
-            </div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="relative w-full aspect-video rounded-[3rem] overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border-4 border-white/5"
-            >
-              <iframe 
-                title="360 Virtual Tour"
-                width="100%" 
-                height="100%" 
-                src="https://www.airpano.com/embed.php?3D=bagan-myanmar" 
-                frameBorder="0" 
-                scrolling="no" 
-                allowFullScreen
-                className="grayscale-[20%] hover:grayscale-0 transition-all duration-700"
-              ></iframe>
-
-              <div className="absolute top-6 right-6 pointer-events-none group-hover:opacity-0 transition-opacity bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-                <p className="text-white text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                  <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-                  {langData[lang].dragInstruction}
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
         {/* --- 3. GALLERY SECTION --- */}
         <section className="bg-white py-32 px-6">
           <div className="max-w-7xl mx-auto text-center mb-20">

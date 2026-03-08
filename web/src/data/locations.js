@@ -166,6 +166,9 @@ export const locations = [
     tagline: 'The Sunset Terrace',
     coordinates: [21.1637, 94.8643],
     thumbnail: '/Temples/shwesandaw.jpg',
+    gallery: [
+      
+    ],
     history: 'The Shwesandaw Pagoda, located in the ancient city of Bagan in Myanmar, was built in 1057 AD by King Anawrahta, the founder of the Pagan Kingdom. The pagoda was constructed to enshrine several sacred hairs of Gautama Buddha, which were brought from the kingdom of Thaton after King Anawrahta conquered it. Because of these sacred relics, the pagoda quickly became an important religious monument and a place of worship for Buddhists in the region.The structure of Shwesandaw Pagoda is distinctive for its five receding square terraces that rise to a cylindrical stupa at the top. These terraces were traditionally used by pilgrims and visitors to climb up and offer prayers while enjoying a panoramic view of the surrounding temples and plains of Bagan. The pagoda is also decorated with terracotta plaques that illustrate scenes from the Jataka tales, which describe the previous lives of the Buddha.Throughout history, the pagoda has experienced damage from earthquakes, which are common in the Bagan region. However, it has been restored several times to preserve its historical and religious significance. For many years, Shwesandaw Pagoda was one of the most popular locations in Bagan for watching sunrise and sunset because of its elevated terraces and clear view over thousands of ancient templesToday, Shwesandaw Pagoda remains an important cultural and historical landmark of Bagan. Although climbing the terraces is now restricted to protect the structure, the pagoda continues to attract pilgrims, historians, and tourists who come to admire its architecture and learn about its role in the early spread of Theravada Buddhism in Myanmar.',
     tourStops: [
       {
@@ -184,6 +187,9 @@ export const locations = [
     tagline: 'The Massive Fortress of Faith',
     coordinates: [21.1620, 94.8729],
     thumbnail: '/Temples/Dhammayangyi.jpg',
+    gallery: [
+      
+    ],
     history: 'The Dhammayangyi Temple, located in the ancient city of Bagan in Myanmar, was built around 1170 AD by King Narathu, one of the rulers of the Pagan Kingdom. It is the largest temple in Bagan and is well known for its massive brick structure and impressive architectural scale. King Narathu ordered the construction of the temple after he came to power, and many historians believe it was built as an act of religious merit to atone for the violent acts he committed, including the assassination of his own father and brother to seize the throne.The temple is famous for the extraordinary precision of its brickwork. According to local legend, the king demanded perfection from the builders and is said to have executed bricklayers if a needle could fit between the bricks they placed. As a result, the brickwork of Dhammayangyi Temple is considered some of the finest and tightest masonry in all of Bagan. The temple was designed with a pyramid-like structure and thick walls, giving it a fortress-like appearance compared to other temples in the region.Although the temple was intended to be a grand religious monument, construction was never fully completed. Historical records suggest that King Narathu was assassinated before the temple could be finished, which left some inner corridors and chambers sealed or unfinished. Despite this, the temple remains one of the most remarkable structures in Bagan.Today, Dhammayangyi Temple stands as a powerful symbol of Bagan’s architectural achievement and historical legends. Visitors are drawn to its mysterious history, enormous size, and the incredible craftsmanship of its brick construction, making it one of the most fascinating landmarks among the thousands of temples scattered across the Bagan plains.',
     tourStops: [
       {
@@ -202,6 +208,9 @@ export const locations = [
     tagline: 'The Crowning Jewel',
     coordinates: [21.1649, 94.8814],
     thumbnail: '/Temples/Sulamani.jpg',
+    gallery: [
+      
+    ],
     history: 'The Sulamani Temple, located in the ancient city of Bagan in Myanmar, was built in 1183 AD during the reign of King Narapatisithu, one of the most influential rulers of the Pagan Kingdom. The temple is considered one of the finest architectural achievements of the Late Bagan period and reflects the advanced artistic and structural techniques developed during that time.Sulamani Temple was constructed using red brick and is designed as a two-story structure with elegant terraces and a central tower that rises above the surrounding plains of Bagan. The temple is well known for its balanced proportions, symmetrical design, and detailed decorative elements. Inside the temple, visitors can find beautifully preserved mural paintings, stucco carvings, and Buddha images that illustrate important scenes from Buddhist teachings and the life of the Buddha.The name “Sulamani” is believed to mean “Crown Jewel,” reflecting the temple’s importance and beauty. Historical records suggest that the king built the temple at the location where a sacred ruby dropped from the sky, making the site spiritually significant. Because of its artistic richness and historical value, the temple is often regarded as one of the most impressive monuments from the later period of Bagan architecture.Although the temple has suffered damage from earthquakes over the centuries, restoration efforts have helped preserve much of its structure and artwork. Today, Sulamani Temple remains an important religious and cultural landmark in Bagan, attracting visitors who come to admire its remarkable architecture, ancient murals, and peaceful atmosphere.',
     tourStops: [
       {
@@ -220,6 +229,9 @@ export const locations = [
     tagline: 'The Temple of Omniscience',
     coordinates: [21.1688, 94.8631],
     thumbnail: '/Temples/Thatbyinnyu.jpg',
+    gallery: [
+      
+    ],
     history: 'Constructed in 1144 by King Alaungsithu, its name refers to the omniscience of the Buddha.',
     tourStops: [
       {
@@ -238,6 +250,9 @@ export const locations = [
     tagline: 'The Gilded Pentagram',
     coordinates: [21.1472, 94.8856],
     thumbnail: '/Temples/Dhammayazika.jpg',
+    gallery: [
+      
+    ],
     history: 'Built in 1196 by King Narapatisithu, it is notable for having five sides instead of the traditional four.',
     tourStops: [
       {
@@ -252,6 +267,9 @@ export const locations = [
   {
     id: 'tayoke-pyay-temple',
     name: 'Tayoke Pyay Temple',
+    gallery: [
+      
+    ],
     description: 'A large two-story temple located in the Minnanthu village area.',
     tagline: 'The Flight of the Invaders',
     coordinates: [21.1610, 94.8847],
@@ -274,6 +292,9 @@ export const locations = [
     tagline: 'The Hall of Sunset',
     coordinates: [21.1578, 94.8825],
     thumbnail: '/Temples/Pyatthatgyi.jpg',
+    gallery: [
+      
+    ],
     history: 'An example of the "Double-cave" style temple, built in the 13th century during the reign of King Kyaswa.',
     tourStops: [
       {
@@ -293,6 +314,9 @@ export const locations = [
     tagline: 'The Queen’s Prayer',
     coordinates: [21.1595, 94.8858],
     thumbnail: '/Temples/Thanbula.jpg',
+    gallery: [
+      
+    ],
     history: 'Built in 1255 by Queen Thanbula. It is famous for its interior lighting and mural paintings.',
     tourStops: [
       {
