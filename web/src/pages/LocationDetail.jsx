@@ -6,19 +6,68 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import 'leaflet/dist/leaflet.css';
+// Add these to your top imports if they aren't there!
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { OrbitControls, useTexture } from '@react-three/drei';
+import { Suspense } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 // Components
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 import GalleryModal from '../components/GalleryModal.jsx';
 import { locations } from '../data/locations.js';
 
+
 const LocationDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { scrollY } = useScroll();
   const location = locations.find((loc) => loc.id === id);
+  // Add this near your other state/variable declarations
+const langData = {
+  en: {
+    tour3DTitle: "3D Heritage Gallery",
+    tour3DSub: "Experience the depth of Myanmar's history through interactive depth-mapped visuals."
+  },
+  my: {
+    tour3DTitle: "၃-ဘက်မြင် အမွေအနှစ်ပြခန်း",
+    tour3DSub: "မြန်မာ့သမိုင်းကြောင်းကို ပိုမိုနက်ရှိုင်းစွာ မြင်တွေ့နိုင်ရန် ဖန်တီးထားပါသည်။"
+  }
+};
+const Scene3D = ({ originalImage, depthMap }) => {
+  const [colorTex, depthTex] = useTexture([originalImage, depthMap]);
+  const meshRef = useRef();
 
+  useFrame((state) => {
+    if (meshRef.current) {
+      // Reduced swaying range to prevent edges from showing too much
+      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+    }
+  });
+
+  return (
+    <>
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[1, 2, 3]} intensity={1.5} />
+      // Inside Scene3D component
+<mesh ref={meshRef}>
+  {/* Reduced width to 4 and height to 2.8 for a "cinematic" landscape look */}
+  <planeGeometry args={[4, 2.8, 128, 128]} /> 
+  <meshStandardMaterial
+    map={colorTex}
+    displacementMap={depthTex}
+    displacementScale={0.5} 
+  />
+</mesh>
+    </>
+  );
+};
   // --- State Management ---
   const [lang, setLang] = useState('en'); // 'en' or 'my'
   const [isReading, setIsReading] = useState(false);
@@ -278,7 +327,44 @@ const LocationDetail = () => {
             </div>
           </div>
         </section>
+ {/* --- 3D SECTION --- */}
+<section className="py-20 bg-[#FAFAFA] overflow-hidden">
+  <div className="max-w-7xl mx-auto px-6">
+    
+    {/* Centered Wrapper for both Image and Text */}
+    <div className="max-w-2xl mx-auto"> 
+      
+      {/* 1. The 3D Image Container (Removed Border and Absolute Text) */}
+      <div className="relative h-[350px] w-full rounded-[2rem] overflow-hidden bg-[#FAFAFA] shadow-sm">
+        <Canvas camera={{ position: [0, 0, 4], fov: 40 }}>
+          {/* Matches the section background #FAFAFA perfectly */}
+          <color attach="background" args={['#FAFAFA']} /> 
+          
+          <Suspense fallback={null}>
+            <Scene3D 
+              originalImage={location.thumbnail} 
+              depthMap={`/depth_maps/${location.id}_depth.png`} 
+            />
+          </Suspense>
+          <OrbitControls enableZoom={false} enablePan={false} />
+        </Canvas>
+      </div>
 
+      {/* 2. The Pagoda Name (Now right below the image, no overlap) */}
+      <div className="mt-6 px-2">
+        <h4 className="text-slate-800 text-2xl font-serif font-bold">
+          {lang === 'my' ? (location.nameMy || location.name) : location.name}
+        </h4>
+        <div className="w-12 h-1 mt-2" />
+        
+        <p className="text-slate-500 text-sm mt-3 uppercase tracking-widest font-medium">
+          {lang === 'en' ? 'Interactive 3D Depth Map' : 'အပြန်အလှန်အကျိုးပြု ၃-ဘက်မြင် မြင်ကွင်း'}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
         {/* --- 3. GALLERY SECTION --- */}
         <section className="bg-white py-32 px-6">
           <div className="max-w-7xl mx-auto text-center mb-20">

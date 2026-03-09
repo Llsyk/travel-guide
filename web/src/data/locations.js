@@ -6,6 +6,7 @@ export const locations = [
     tagline: 'Where History Meets Spirituality',
     coordinates: [21.1717, 94.8585],
     thumbnail: '/Temples/shwesigone.jpg',
+    depthMap: '/depth_maps/bagan-shweshigon_depth.png',
     history: 'The Shwezigon Pagoda is one of the most important and sacred Buddhist stupas in Myanmar. It is located in Nyaung-U, near the ancient city of Bagan. The pagoda was first built during the reign of King Anawrahta in the 11th century. King Anawrahta, who ruled the Pagan Kingdom from 1044 to 1077, began the construction of the pagoda as part of his effort to promote Theravada Buddhism throughout his kingdom. However, the construction was not completed during his lifetime.After King Anawrahta passed away, his successor King Kyansittha continued the construction and finally completed the pagoda around the year 1102. The Shwezigon Pagoda then became one of the most significant religious monuments in Bagan and served as a prototype for many Burmese stupas built later across the country.The pagoda is famous for its large golden stupa, which is covered with gold leaf and stands on a series of circular terraces. Surrounding the main stupa are many smaller temples, shrines, and pavilions that contain images of the Buddha and other religious artifacts. One of the most important features of Shwezigon Pagoda is that it is believed to enshrine a sacred tooth and bone relic of the Buddha. Because of this, the pagoda has been a major pilgrimage site for Buddhists for centuries.In addition to its religious importance, the Shwezigon Pagoda also holds great historical and cultural significance. It represents the architectural style of early Bagan stupas and influenced the design of many later pagodas in Myanmar. The pagoda has survived earthquakes and centuries of history, and it has been restored multiple times to preserve its beauty and spiritual importance.Today, Shwezigon Pagoda remains one of the most visited and respected religious landmarks in Bagan. Pilgrims and tourists from around the world come to admire its golden structure, explore its surrounding temples, and experience the spiritual atmosphere of this historic Buddhist monument.',
     gallery: [
       
@@ -314,6 +315,7 @@ export const locations = [
     tagline: 'The Queen’s Prayer',
     coordinates: [21.1595, 94.8858],
     thumbnail: '/Temples/Thanbula.jpg',
+
     gallery: [
       
     ],
